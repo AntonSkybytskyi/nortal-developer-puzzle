@@ -1,0 +1,26 @@
+<mat-form-field>
+  <input 
+    matInput 
+    placeholder="From" 
+    [matDatepicker]="pickerFrom" 
+    [formControl]="from" 
+    [max]="maxDate" 
+    (dateChange)="onFromDateChanged($event)"
+    readonly
+  >
+  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+  <mat-datepicker #pickerFrom ></mat-datepicker>
+</mat-form-field>
+<mat-form-field>
+  <input 
+    matInput 
+    placeholder="To" 
+    [matDatepicker]="pickerTo" 
+    [formControl]="to" 
+    [min]="minDate" 
+    [max]="maxDate"
+    readonly
+  >
+  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+  <mat-datepicker #pickerTo></mat-datepicker>
+</mat-form-field>

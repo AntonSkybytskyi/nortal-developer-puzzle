@@ -43,6 +43,7 @@
       >
     </mat-error>
   </mat-form-field>
+  <coding-challenge-date-range [from]="stockPickerForm.get('from')" [to]="stockPickerForm.get('to')"></coding-challenge-date-range>
   <button (click)="fetchQuote()" mat-raised-button color="primary">Go</button>
   <mat-error *ngIf="error$ | async as error">{{ error }}</mat-error>
 

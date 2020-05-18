@@ -8,6 +8,7 @@ import {
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { SharedUiChartModule } from '@coding-challenge/shared/ui/chart';
+import { SharedUiDateRangeModule } from '@coding-challenge/shared/ui/date-range';
 import { StocksComponent } from './stocks/stocks.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    SharedUiChartModule
+    SharedUiChartModule,
+    SharedUiDateRangeModule,
   ],
   declarations: [StocksComponent]
 })

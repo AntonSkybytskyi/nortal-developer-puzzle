@@ -5,7 +5,8 @@ export enum PriceQueryActionTypes {
   SelectSymbol = 'priceQuery.selectSymbol',
   FetchPriceQuery = 'priceQuery.fetch',
   PriceQueryFetched = 'priceQuery.fetched',
-  PriceQueryFetchError = 'priceQuery.error'
+  PriceQueryFetchError = 'priceQuery.error',
+  SelectDateRange = 'priceQuery.selectDateRange',
 }
 
 export class FetchPriceQuery implements Action {
@@ -28,11 +29,17 @@ export class SelectSymbol implements Action {
   constructor(public symbol: string) {}
 }
 
+export class SelectDateRange implements Action {
+  readonly type = PriceQueryActionTypes.SelectDateRange;
+  constructor(public from: string | null, public to: string | null) {}
+}
+
 export type PriceQueryAction =
   | FetchPriceQuery
   | PriceQueryFetched
   | PriceQueryFetchError
-  | SelectSymbol;
+  | SelectSymbol
+  | SelectDateRange;
 
 export const fromPriceQueryActions = {
   FetchPriceQuery,

@@ -35,7 +35,9 @@ export class StocksComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
       symbol: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+')]],
-      period: [null, Validators.required]
+      period: [null, Validators.required],
+      from: [null],
+      to: [null],
     });
   }
 
@@ -57,7 +59,9 @@ export class StocksComponent implements OnInit, OnDestroy {
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
-      const { symbol, period } = this.stockPickerForm.value;
+      const { symbol, period, from, to } = this.stockPickerForm.value;
+      this.priceQuery.setCustomDate(from, to);
+
       this.priceQuery.fetchQuote(symbol, period);
     }
   }

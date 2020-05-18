@@ -10,10 +10,16 @@
       ><span
         *ngIf="
           !stockPickerForm.get('symbol').valid &&
-          stockPickerForm.get('symbol').touched
+          (stockPickerForm.get('symbol').touched || !stockPickerForm.get('symbol').dirty)
         "
-        >Please enter a symbol</span
-      >
+        >
+          <ng-container *ngIf="stockPickerForm.get('symbol').errors?.required">
+            Please enter a symbol
+          </ng-container>
+          <ng-container *ngIf="stockPickerForm.get('symbol').errors?.pattern">
+            Please use only letters
+          </ng-container>
+        </span>
     </mat-error>
   </mat-form-field>
 
@@ -27,9 +33,18 @@
         {{ timePeriod.viewValue }}
       </mat-option>
     </mat-select>
+    <mat-error
+      ><span
+        *ngIf="
+          !stockPickerForm.get('period').valid &&
+          (stockPickerForm.get('period').touched || !stockPickerForm.get('period').dirty)
+        "
+        >Please choose one of the option</span
+      >
+    </mat-error>
   </mat-form-field>
+  <button (click)="fetchQuote()" mat-raised-button color="primary">Go</button>
+  <mat-error *ngIf="error$ | async as error">{{ error }}</mat-error>
 
-  <button (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>
-
 <coding-challenge-chart [chartData]="quotes$ | async"></coding-challenge-chart>

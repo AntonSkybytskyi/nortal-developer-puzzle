@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { StocksAppConfigToken } from '@coding-challenge/stocks/data-access-app-config';
 import { StocksDataAccessPriceQueryModule } from '@coding-challenge/stocks/data-access-price-query';
@@ -24,7 +24,7 @@ import { environment } from '../environments/environment';
           '@coding-challenge/stocks/feature-shell#StocksFeatureShellModule'
       }
     ]),
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     NxModule.forRoot(),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

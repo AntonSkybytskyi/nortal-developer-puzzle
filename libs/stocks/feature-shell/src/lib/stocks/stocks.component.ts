@@ -13,6 +13,7 @@ export class StocksComponent implements OnInit {
   period: string;
 
   quotes$ = this.priceQuery.priceQueries$;
+  error$ = this.priceQuery.priceError$
 
   timePeriods = [
     { viewValue: 'All available data', value: 'max' },
@@ -27,7 +28,7 @@ export class StocksComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
-      symbol: [null, Validators.required],
+      symbol: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+')]],
       period: [null, Validators.required]
     });
   }

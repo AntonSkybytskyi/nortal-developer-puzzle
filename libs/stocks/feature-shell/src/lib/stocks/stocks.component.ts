@@ -1,19 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'coding-challenge-stocks',
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.css']
 })
-export class StocksComponent implements OnInit {
+export class StocksComponent implements OnInit, OnDestroy {
   stockPickerForm: FormGroup;
   symbol: string;
   period: string;
 
   quotes$ = this.priceQuery.priceQueries$;
   error$ = this.priceQuery.priceError$
+  selectedSymbol$ = this.priceQuery.selectedSymbol$
+  private dispose$: Subject<symbol> = new Subject();
+  private readonly debounceTime = 200;
+
 
   timePeriods = [
     { viewValue: 'All available data', value: 'max' },
@@ -33,7 +39,21 @@ export class StocksComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.stockPickerForm.controls.symbol.valueChanges.pipe(
+      takeUntil(this.dispose$),
+      debounceTime(this.debounceTime),
+    ).subscribe((value: string) => this.priceQuery.setSymbol(value));
+
+    this.selectedSymbol$.subscribe(() => {
+      takeUntil(this.dispose$),
+      this.fetchQuote();
+    });
+  }
+
+  ngOnDestroy() {
+    this.dispose$.next(Symbol());
+  }
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
